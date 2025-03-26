@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystical 8-Ball</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&family=Josefin+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0b2c, #4a1a5e);
+            font-family: 'Josefin Sans', sans-serif;
+            color: #e6e6fa;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #magicBall {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 50%),
+                        linear-gradient(135deg, #36013f, #5e1f5e);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #magicBall:hover {
+            transform: scale(1.05);
+        }
+
+        #answer {
+            font-family: 'Tangerine', cursive;
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(230,230,250,0.7);
+            min-height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #questionInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            color: #e6e6fa;
+        }
+
+        #shake-btn {
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #shake-btn:hover {
+            background: linear-gradient(135deg, #9932cc, #6a5acd);
+            transform: scale(1.05);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mystical 8-Ball</h1>
+        <input type="text" id="nameInput" placeholder="Your Name (Optional)">
+        <input type="text" id="questionInput" placeholder="Ask your mystical question...">
+        <div id="magicBall">
+            <div id="answer"></div>
+        </div>
+        <button id="shake-btn">Shake the Mystical Sphere</button>
+    </div>
+
+    <script>
+        // Create sparkle effect
+        function createSparkles() {
+            const ball = document.getElementById('magicBall');
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.animationDelay = `${Math.random() * 2}s`;
+                ball.appendChild(sparkle);
+            }
+        }
+        createSparkles();
+
+        document.getElementById('shake-btn').addEventListener('click', function() {
+            // Get name
+            const nameInput = document.getElementById('nameInput');
+            const userName = nameInput.value.trim() || "Mysterious Seeker";
+
+            // Get question
+            const questionInput = document.getElementById('questionInput');
+            const userQuestion = questionInput.value.trim() || "What does the universe hold?";
+
+            // Generate random answer
+            let randomNumber = Math.floor(Math.random() * 9);
+            let eightBall = '';
+            switch (randomNumber) {
+                case 0:
+                    eightBall = "The mystical energies whisper: Decidedly no.";
+                    break;
+                case 1:
+                    eightBall = "Cosmic forces align: Absolutely yes!";
+                    break;
+                case 2:
+                    eightBall = "The mists are clouded. Try again.";
+                    break;
+                case 3:
+                    eightBall = "The future remains veiled.";
+                    break;
+                case 4:
+                    eightBall = "Shadows suggest: Unlikely.";
+                    break;
+                case 5:
+                    eightBall = "Destiny nods in agreement.";
+                    break;
+                case 6:
+                    eightBall = "Ethereal whispers say no.";
+                    break;
+                case 7:
+                    eightBall = "The path looks challenging.";
+                    break;
+                case 8:
+                    eightBall = "Starlight points to possibility.";
+                    break;
+            }
+
+            // Display result
+            const answerDiv = document.getElementById('answer');
+            answerDiv.textContent = eightBall;
+
+            // Optional: Add some shake animation
+            const ball = document.getElementById('magicBall');
+            ball.style.animation = 'none';
+            ball.offsetHeight; // Trigger reflow
+            ball.style.animation = 'shake 0.5s';
+        });
+    </script>
+</body>
+</html>
